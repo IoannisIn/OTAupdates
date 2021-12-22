@@ -7,7 +7,7 @@
 #include <Arduino.h>
 
 extern String FirmwareVer = {
-  "7.0"
+  "8.0"
 };
 
 extern const char * ssid = "Arkasa";

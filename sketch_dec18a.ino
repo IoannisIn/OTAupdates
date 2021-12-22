@@ -10,6 +10,8 @@
 #include <Arduino.h>
 #include <WebServer.h>
 
+#include "index.h"  //Web page header file
+
 #define OTA_button 0  //This buttons needs to be pressed for 3 seconds
 
 WebServer server(80);
@@ -28,9 +30,11 @@ void setup() {
   button.begin();
   button.onPressedFor(press_duration, onPressesFor3s);
   connect_wifi();
-  server.on("/", handle_root);
-  server.begin();
-  Serial.println("HTTP server started..");
+  server.on("/", handleRoot);      //This is display page
+  server.on("/readADC", handleADC);//To get update of ADC Value only
+ 
+  server.begin();                  //Start server
+  Serial.println("HTTP server started");
   delay(100);
 }
 
@@ -45,15 +49,14 @@ void onPressesFor3s() {
   FirmwareVersionCheck();
 }
 
-String HTML = "<!DOCTYPE html>\
-<html>\
-  <body>\
-    <h1>Welcome</h1>\
-        <p>John</p>\
-        <p>&#128522;</p>\
-  </body>\
-</html>";
-
-void handle_root(){
-server.send(200, "text/html", HTML);
+void handleRoot() {
+ String s = MAIN_page; //Read HTML contents
+ server.send(200, "text/html", s); //Send web page
+}
+ 
+void handleADC() {
+ int a = analogRead(34);
+ String adcValue = String(a);
+ 
+ server.send(200, "text/plane", adcValue); //Send ADC value only to client ajax request
 }
