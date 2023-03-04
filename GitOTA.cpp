@@ -10,8 +10,8 @@ extern String FirmwareVer = {
   "8.0"
 };
 
-extern const char * ssid = "Arkasa";
-extern const char * password = "@@@@@@@@";
+extern const char * ssid = "your-SSID";
+extern const char * password = "yout-Password";
 
 extern unsigned long previousMillis = 0; // will store last time LED was updated
 extern unsigned long previousMillis2 = 0;
